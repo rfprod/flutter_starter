@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -25,11 +26,11 @@ Future<void> main() async {
   );
 }
 
-/// We are using a StatefulWidget such that we only create the [Future] once,
-/// no matter how many times our widget rebuild.
-/// If we used a [StatelessWidget], in the event where [App] is rebuilt, that
-/// would re-initialize FlutterFire and make our application re-enter loading state,
-/// which is undesired.
+// We are using a StatefulWidget such that we only create the [Future] once,
+// no matter how many times our widget rebuild.
+// If we used a [StatelessWidget], in the event where [App] is rebuilt, that
+// would re-initialize FlutterFire and make our application re-enter loading state,
+// which is undesired.
 class App extends StatefulWidget {
   const App({Key? key}) : super(key: key);
 
@@ -39,9 +40,10 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> {
-  /// The future is part of the state of our widget. We should not call `initializeApp`
-  /// directly inside [build].
+  // The future is part of the state of our widget. We should not call `initializeApp`
+  // directly inside [build].
   final Future<FirebaseApp> _initialization = Firebase.initializeApp(
+    name: 'flutter-starter', // define the application name explicitly
     options: FirebaseOptions(
       apiKey: dotenv.get('FIRE_API_KEY', fallback: 'FIRE_API_KEY'),
       appId: dotenv.get('FIRE_APP_ID', fallback: 'FIRE_APP_ID'),
@@ -49,7 +51,13 @@ class _AppState extends State<App> {
           fallback: 'FIRE_MESSAGING_SENDER_ID'),
       projectId: dotenv.get('FIRE_PROJECT_ID', fallback: 'FIRE_PROJECT_ID'),
     ),
-  );
+  ).catchError((Object error) {
+    if (error is FirebaseException && error.code == 'duplicate-app') {
+      return Firebase.app('flutter-starter');
+    } else {
+      throw error;
+    }
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +67,6 @@ class _AppState extends State<App> {
         // Initialize FlutterFire:
         future: _initialization,
         builder: (BuildContext context, AsyncSnapshot<Object?> snapshot) {
-          // Check for errors
           if (snapshot.hasError) {
             return AppError(key: Key('error'));
           }

@@ -5,7 +5,7 @@ import 'package:flutter_starter/login/login.page.dart';
 class AppRoot extends StatelessWidget {
   const AppRoot({required Key key}) : super(key: key);
 
-  // This widget is the root of your application.
+  // This widget is the root of the application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -27,7 +27,7 @@ class AppRoot extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       initialRoute: '/',
-      routes: {
+      routes: <String, Widget Function(BuildContext)>{
         '/': (BuildContext context) =>
             const AppHomePage(key: Key('home'), title: 'Flutter starter'),
         '/login': (BuildContext context) =>

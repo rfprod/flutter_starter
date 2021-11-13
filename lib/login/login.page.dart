@@ -1,8 +1,9 @@
 import 'dart:core';
 import 'dart:async';
-import 'dart:convert';
+// import 'dart:convert';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
+// import 'package:http/http.dart' as http;
 import 'package:sentry/sentry.dart';
 
 class AppLoginResponse {
@@ -69,56 +70,98 @@ class _AppLoginPageState extends State<AppLoginPage> {
     );
   }
 
-  Future<AppLoginResponse> _submitForm() async {
-    if (!_validate()) {
-      String error = 'Invalid form value.';
-      Exception exception = Exception(error);
-      _showSnackbar(error);
-      throw exception;
-    } else {
-      _formKey.currentState!.save();
-
-      Uri uri = Uri.parse('https://jsonplaceholder.typicode.com/albums/1');
-
-      Map<String, String> headers = <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-      };
-
-      Object requestBody =
-          jsonEncode(<String, dynamic>{'email': _email, 'password': _password});
-
-      final http.Response response = await http
-          .post(uri, headers: headers, body: requestBody)
-          .timeout(const Duration(seconds: 10));
-
-      if (response.statusCode == 200) {
-        Map<String, dynamic> responseBody =
-            jsonDecode(response.body) as Map<String, dynamic>;
-        return AppLoginResponse.fromJson(responseBody);
-      } else {
-        String error = 'Login attempt failed with email $_email.';
-        Exception exception = Exception(error);
-        _showSnackbar(error);
-        throw exception;
+  Future<UserCredential> _signIn(BuildContext context) async {
+    return await FirebaseAuth.instance
+        .signInWithEmailAndPassword(email: _email, password: _password)
+        .then((UserCredential value) {
+      Navigator.pop(context);
+      return value;
+    }).catchError((Object error) {
+      if (error is FirebaseAuthException) {
+        switch (error.code) {
+          case 'user-not-found':
+            {
+              _showSnackbar(
+                  'No user found for that email. Trying to register you automatically with the provided credentials.');
+              _signUp(context);
+            }
+            break;
+          case 'wrong-password':
+            {
+              _showSnackbar('Wrong password provided for that user.');
+            }
+            break;
+        }
       }
-    }
+    });
   }
 
-  void _formSubmitted(String value) async {
+  Future<UserCredential> _signUp(BuildContext context) async {
+    return await FirebaseAuth.instance
+        .createUserWithEmailAndPassword(email: _email, password: _password)
+        .then((UserCredential value) {
+      Navigator.pop(context);
+      return value;
+    }).catchError((Object error) {
+      if (error is FirebaseAuthException) {
+        switch (error.code) {
+          case 'weak-password':
+            {
+              _showSnackbar('The password provided is too weak.');
+            }
+            break;
+          case 'email-already-in-use':
+            {
+              _showSnackbar('The account already exists for that email.');
+            }
+            break;
+        }
+      }
+    });
+  }
+
+  void _submitForm(BuildContext context) async {
     try {
-      await _submitForm();
+      await _signIn(context);
     } on Exception catch (e) {
       _sentryError(e);
     }
   }
 
-  void _logIn() async {
-    try {
-      await _submitForm();
-    } on Exception catch (e) {
-      _sentryError(e);
-    }
-  }
+  // Future<AppLoginResponse> _submitForm() async {
+  //   if (!_validate()) {
+  //     String error = 'Invalid form value.';
+  //     Exception exception = Exception(error);
+  //     _showSnackbar(error);
+  //     throw exception;
+  //   } else {
+  //     _formKey.currentState!.save();
+
+  //     Uri uri = Uri.parse('https://jsonplaceholder.typicode.com/albums/1');
+
+  //     Map<String, String> headers = <String, String>{
+  //       'Content-Type': 'application/json; charset=UTF-8',
+  //     };
+
+  //     Object requestBody =
+  //         jsonEncode(<String, dynamic>{'email': _email, 'password': _password});
+
+  //     final http.Response response = await http
+  //         .post(uri, headers: headers, body: requestBody)
+  //         .timeout(const Duration(seconds: 10));
+
+  //     if (response.statusCode == 200) {
+  //       Map<String, dynamic> responseBody =
+  //           jsonDecode(response.body) as Map<String, dynamic>;
+  //       return AppLoginResponse.fromJson(responseBody);
+  //     } else {
+  //       String error = 'Login attempt failed with email $_email.';
+  //       Exception exception = Exception(error);
+  //       _showSnackbar(error);
+  //       throw exception;
+  //     }
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -133,9 +176,6 @@ class _AppLoginPageState extends State<AppLoginPage> {
               child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Text(
-                'Please enter your email and a password to log in.',
-              ),
               Padding(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
@@ -182,10 +222,11 @@ class _AppLoginPageState extends State<AppLoginPage> {
                   },
                   onSaved: _setPassword,
                   onChanged: _setPassword,
-                  onFieldSubmitted: _formSubmitted,
+                  onFieldSubmitted: (String value) => _submitForm(context),
                 ),
               ),
-              TextButton(onPressed: _logIn, child: Text('Log in'))
+              TextButton(
+                  onPressed: () => _submitForm(context), child: Text('Log in'))
             ],
           )),
         ));

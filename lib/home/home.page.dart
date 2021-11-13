@@ -1,3 +1,7 @@
+import 'dart:core';
+import 'dart:async';
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class AppHomePage extends StatefulWidget {
@@ -21,6 +25,19 @@ class AppHomePage extends StatefulWidget {
 class _AppHomePageState extends State<AppHomePage> {
   int _counter = 0;
 
+  final Stream<User?> _authChange = FirebaseAuth.instance.authStateChanges();
+
+  StreamSubscription<User?>? _userSub;
+
+  User? _user;
+
+  void _showSnackbar(String message) {
+    Text text = Text(message);
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: text),
+    );
+  }
+
   void _incrementCounter() {
     setState(() {
       // This call to setState tells the Flutter framework that something has
@@ -30,6 +47,31 @@ class _AppHomePageState extends State<AppHomePage> {
       // called again, and so nothing would appear to happen.
       _counter++;
     });
+  }
+
+  @override
+  initState() {
+    super.initState();
+    _userSub = _authChange.listen((User? user) {
+      if (user == null) {
+        _showSnackbar('User is currently signed out!');
+        Navigator.pushNamed(context, '/login');
+        setState(() {
+          _user = null;
+        });
+      } else {
+        _showSnackbar('User is signed in!');
+        setState(() {
+          _user = user;
+        });
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _userSub?.cancel();
   }
 
   @override
@@ -46,11 +88,14 @@ class _AppHomePageState extends State<AppHomePage> {
         // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
         actions: <Widget>[
-          IconButton(
-              icon: Icon(Icons.login),
-              onPressed: () {
-                Navigator.pushNamed(context, '/login');
-              }),
+          if (_user == null)
+            IconButton(
+                icon: Icon(Icons.login),
+                onPressed: () => Navigator.pushNamed(context, '/login')),
+          if (_user != null)
+            IconButton(
+                icon: Icon(Icons.logout),
+                onPressed: () => FirebaseAuth.instance.signOut()),
         ],
       ),
       body: Center(
@@ -71,6 +116,9 @@ class _AppHomePageState extends State<AppHomePage> {
           // horizontal).
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            Text(
+              'Logged in user: ${_user?.email}',
+            ),
             Text(
               'You have pushed the button this many times:',
             ),
