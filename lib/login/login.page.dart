@@ -1,21 +1,8 @@
 import 'dart:core';
 import 'dart:async';
-// import 'dart:convert';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-// import 'package:http/http.dart' as http;
 import 'package:sentry/sentry.dart';
-
-class AppLoginResponse {
-  final String token;
-
-  AppLoginResponse({required this.token});
-
-  factory AppLoginResponse.fromJson(Map<String, dynamic> json) =>
-      AppLoginResponse(
-        token: json['token'] as String,
-      );
-}
 
 class AppLoginPage extends StatefulWidget {
   const AppLoginPage({required Key key, required this.title}) : super(key: key);
@@ -127,41 +114,6 @@ class _AppLoginPageState extends State<AppLoginPage> {
       _sentryError(e);
     }
   }
-
-  // Future<AppLoginResponse> _submitForm() async {
-  //   if (!_validate()) {
-  //     String error = 'Invalid form value.';
-  //     Exception exception = Exception(error);
-  //     _showSnackbar(error);
-  //     throw exception;
-  //   } else {
-  //     _formKey.currentState!.save();
-
-  //     Uri uri = Uri.parse('https://jsonplaceholder.typicode.com/albums/1');
-
-  //     Map<String, String> headers = <String, String>{
-  //       'Content-Type': 'application/json; charset=UTF-8',
-  //     };
-
-  //     Object requestBody =
-  //         jsonEncode(<String, dynamic>{'email': _email, 'password': _password});
-
-  //     final http.Response response = await http
-  //         .post(uri, headers: headers, body: requestBody)
-  //         .timeout(const Duration(seconds: 10));
-
-  //     if (response.statusCode == 200) {
-  //       Map<String, dynamic> responseBody =
-  //           jsonDecode(response.body) as Map<String, dynamic>;
-  //       return AppLoginResponse.fromJson(responseBody);
-  //     } else {
-  //       String error = 'Login attempt failed with email $_email.';
-  //       Exception exception = Exception(error);
-  //       _showSnackbar(error);
-  //       throw exception;
-  //     }
-  //   }
-  // }
 
   @override
   Widget build(BuildContext context) {
