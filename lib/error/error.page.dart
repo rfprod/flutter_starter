@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_starter/error/error.widget.dart';
 
 class AppErrorPage extends StatefulWidget {
   const AppErrorPage({required Key key, required this.title}) : super(key: key);
@@ -16,20 +17,7 @@ class _AppErrorPageState extends State<AppErrorPage> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'Something went wrong',
-            ),
-            Text(
-              'Please try again a bit later.',
-              style: Theme.of(context).textTheme.headline5,
-            ),
-          ],
-        ),
-      ),
+      body: AppErrorWidget(key: Key('error')),
     );
   }
 }

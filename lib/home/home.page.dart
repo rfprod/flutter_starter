@@ -5,6 +5,8 @@ import 'dart:convert';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_starter/error/error.widget.dart';
+import 'package:flutter_starter/loading/loading.widget.dart';
 import 'package:http/http.dart' as http;
 
 class CurrencyRate {
@@ -244,11 +246,10 @@ class _AppHomePageState extends State<AppHomePage> {
               style: Theme.of(context).textTheme.headline5,
             ),
             FutureBuilder<ApiResponse>(
-              // Initialize FlutterFire:
               future: _getDataFuture(),
               builder: (BuildContext context, AsyncSnapshot<Object?> snapshot) {
                 if (snapshot.hasError) {
-                  return _tableBody(context); // TODO: show error
+                  return AppErrorWidget(key: Key('error'));
                 }
 
                 // Once complete, show your application
@@ -257,7 +258,7 @@ class _AppHomePageState extends State<AppHomePage> {
                 }
 
                 // Otherwise, show something whilst waiting for initialization to complete
-                return _tableBody(context); // TODO: show loading indicator
+                return AppLoadingWidget(key: Key('loading'));
               },
             ),
           ],

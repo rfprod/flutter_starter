@@ -34,7 +34,6 @@ Future<void> main() async {
 class App extends StatefulWidget {
   const App({Key? key}) : super(key: key);
 
-  // Create the initialization Future outside of `build`:
   @override
   _AppState createState() => _AppState();
 }
@@ -43,7 +42,7 @@ class _AppState extends State<App> {
   // The future is part of the state of our widget. We should not call `initializeApp`
   // directly inside [build].
   final Future<FirebaseApp> _initialization = Firebase.initializeApp(
-    name: 'flutter-starter', // define the application name explicitly
+    name: 'flutter-starter',
     options: FirebaseOptions(
       apiKey: dotenv.get('FIRE_API_KEY', fallback: 'FIRE_API_KEY'),
       appId: dotenv.get('FIRE_APP_ID', fallback: 'FIRE_APP_ID'),
@@ -64,19 +63,19 @@ class _AppState extends State<App> {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: FutureBuilder<FirebaseApp>(
-        // Initialize FlutterFire:
+        // Initialize FlutterFire.
         future: _initialization,
         builder: (BuildContext context, AsyncSnapshot<Object?> snapshot) {
           if (snapshot.hasError) {
             return AppError(key: Key('error'));
           }
 
-          // Once complete, show your application
+          // Once complete, show your application.
           if (snapshot.connectionState == ConnectionState.done) {
             return AppRoot(key: Key('root'));
           }
 
-          // Otherwise, show something whilst waiting for initialization to complete
+          // Otherwise, show something whilst waiting for initialization to complete.
           return AppLoading(key: Key('loading'));
         },
       ),

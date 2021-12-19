@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_starter/loading/loading.widget.dart';
 
 class AppLoadingPage extends StatefulWidget {
   const AppLoadingPage({required Key key, required this.title})
@@ -17,20 +18,7 @@ class _AppLoadingPageState extends State<AppLoadingPage> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'Loading...',
-            ),
-            Text(
-              'Please wait',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ],
-        ),
-      ),
+      body: AppLoadingWidget(key: Key('loading')),
     );
   }
 }
