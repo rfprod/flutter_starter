@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_starter/error/error.page.dart';
 
 class AppError extends StatelessWidget {
-  const AppError({required Key key}) : super(key: key);
+  const AppError({required Key key, required this.snapshot}) : super(key: key);
 
-  // This widget is diaplayed while the app has errored while during bootstrap.
+  final AsyncSnapshot<Object?> snapshot;
+
+  // This widget is displayed when the app errors during bootstrap.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -13,7 +15,8 @@ class AppError extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: AppErrorPage(key: Key('error'), title: 'Error'),
+      home: AppErrorPage(
+          key: Key('error.page'), snapshot: snapshot, title: 'Error'),
     );
   }
 }

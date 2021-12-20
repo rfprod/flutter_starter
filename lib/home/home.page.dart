@@ -25,15 +25,14 @@ class CurrencyRate {
 }
 
 class ApiResponse {
-  final String reponseBody;
+  final String body;
   final List<CurrencyRate> data;
 
-  ApiResponse({required this.reponseBody, required this.data});
+  ApiResponse({required this.body, required this.data});
 
-  factory ApiResponse.fromJson(String reponseBody) {
-    Map<String, dynamic> jsonData =
-        jsonDecode(reponseBody) as Map<String, dynamic>;
-    List<CurrencyRate> list = jsonData.values
+  factory ApiResponse.fromJson(String body) {
+    Map<String, dynamic> jsonData = jsonDecode(body) as Map<String, dynamic>;
+    List<CurrencyRate> data = jsonData.values
         .map<CurrencyRate>((dynamic value) => CurrencyRate(
             last15m: value['15m'] as double,
             last: value['last'] as double,
@@ -41,7 +40,7 @@ class ApiResponse {
             sell: value['sell'] as double,
             symbol: value['symbol'] as String))
         .toList();
-    ApiResponse result = ApiResponse(reponseBody: reponseBody, data: list);
+    ApiResponse result = ApiResponse(body: body, data: data);
     return result;
   }
 }
@@ -75,7 +74,7 @@ class _AppHomePageState extends State<AppHomePage> {
     });
   }
 
-  List<CurrencyRate> currencyData = <CurrencyRate>[];
+  List<CurrencyRate> tableData = <CurrencyRate>[];
 
   Future<ApiResponse> _getDataFuture() {
     Uri uri = Uri.parse('https://blockchain.info/ticker');
@@ -90,16 +89,16 @@ class _AppHomePageState extends State<AppHomePage> {
         .timeout(const Duration(seconds: 10))
         .then((http.Response response) => ApiResponse.fromJson(response.body))
         .catchError((Object error) {
-      String error = 'Get data failed.';
-      Exception exception = Exception(error);
-      _showSnackbar(error);
+      String errorText = 'Get data failed. ' + error.toString();
+      Exception exception = Exception(errorText);
+      _showSnackbar(errorText);
       throw exception;
     });
   }
 
   Future<ApiResponse> _getData() async {
     final ApiResponse responseData = await _getDataFuture();
-    currencyData = responseData.data;
+    tableData = responseData.data;
     return responseData;
   }
 
@@ -167,7 +166,7 @@ class _AppHomePageState extends State<AppHomePage> {
                 numeric: true,
               ),
             ],
-            rows: currencyData.map<DataRow>((CurrencyRate item) {
+            rows: tableData.map<DataRow>((CurrencyRate item) {
               return DataRow(cells: <DataCell>[
                 DataCell(
                   Text(item.symbol),
@@ -230,6 +229,10 @@ class _AppHomePageState extends State<AppHomePage> {
                 onPressed: () => Navigator.pushNamed(context, '/login')),
           if (_user != null)
             IconButton(
+                icon: Icon(Icons.bar_chart),
+                onPressed: () => Navigator.pushNamed(context, '/charts')),
+          if (_user != null)
+            IconButton(
                 icon: Icon(Icons.logout),
                 onPressed: () => FirebaseAuth.instance.signOut()),
         ],
@@ -249,7 +252,10 @@ class _AppHomePageState extends State<AppHomePage> {
               future: _getDataFuture(),
               builder: (BuildContext context, AsyncSnapshot<Object?> snapshot) {
                 if (snapshot.hasError) {
-                  return AppErrorWidget(key: Key('error'));
+                  return AppErrorWidget(
+                    key: Key('error.widget'),
+                    snapshot: snapshot,
+                  );
                 }
 
                 // Once complete, show your application

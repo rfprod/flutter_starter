@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_starter/charts/charts.page.dart';
 import 'package:flutter_starter/home/home.page.dart';
 import 'package:flutter_starter/login/login.page.dart';
 
@@ -32,6 +33,8 @@ class AppRoot extends StatelessWidget {
             const AppHomePage(key: Key('home'), title: 'Flutter starter'),
         '/login': (BuildContext context) =>
             const AppLoginPage(key: Key('login'), title: 'Log in'),
+        '/charts': (BuildContext context) =>
+            const AppChartsPage(key: Key('charts'), title: 'Charts')
       },
     );
   }

@@ -67,7 +67,7 @@ class _AppState extends State<App> {
         future: _initialization,
         builder: (BuildContext context, AsyncSnapshot<Object?> snapshot) {
           if (snapshot.hasError) {
-            return AppError(key: Key('error'));
+            return AppError(key: Key('error'), snapshot: snapshot);
           }
 
           // Once complete, show your application.
