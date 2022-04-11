@@ -184,6 +184,9 @@ class _AppChartsPageState extends State<AppChartsPage> {
         title: Text(widget.title),
         actions: <Widget>[
           IconButton(
+              icon: Icon(Icons.info),
+              onPressed: () => Navigator.pushNamed(context, '/about')),
+          IconButton(
               icon: Icon(Icons.logout),
               onPressed: () => FirebaseAuth.instance.signOut()),
         ],

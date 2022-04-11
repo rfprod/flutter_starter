@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_starter/about/about.page.dart';
 import 'package:flutter_starter/charts/charts.page.dart';
 import 'package:flutter_starter/home/home.page.dart';
 import 'package:flutter_starter/login/login.page.dart';
@@ -30,11 +31,13 @@ class AppRoot extends StatelessWidget {
       initialRoute: '/',
       routes: <String, Widget Function(BuildContext)>{
         '/': (BuildContext context) =>
-            const AppHomePage(key: Key('home'), title: 'Flutter starter'),
+            const AppHomePage(key: Key('home'), title: 'Home'),
         '/login': (BuildContext context) =>
             const AppLoginPage(key: Key('login'), title: 'Log in'),
         '/charts': (BuildContext context) =>
-            const AppChartsPage(key: Key('charts'), title: 'Charts')
+            const AppChartsPage(key: Key('charts'), title: 'Charts'),
+        '/about': (BuildContext context) =>
+            const AppAboutPage(key: Key('about'), title: 'About')
       },
     );
   }
