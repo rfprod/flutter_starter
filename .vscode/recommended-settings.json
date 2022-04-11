@@ -1,0 +1,47 @@
+{
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[sh]": {
+    "editor.defaultFormatter": "timonwong.shellcheck"
+  },
+  "[shellscript]": {
+    "editor.defaultFormatter": "foxundermoon.shell-format"
+  },
+  "[dart]": {
+    "editor.defaultFormatter": "Dart-Code.dart-code"
+  },
+  "editor.codeActionsOnSave": {
+    "source.fixAll.dart": true,
+    "source.organizeImports": false
+  },
+  "editor.formatOnPaste": true,
+  "editor.formatOnSave": true,
+  "files.autoSave": "afterDelay",
+  "files.autoSaveDelay": 5000,
+  "files.defaultLanguage": "dart",
+  "files.hotExit": "onExit",
+  "files.trimTrailingWhitespace": true,
+  "shellcheck.customArgs": ["-x"],
+  "shellcheck.enable": true,
+  "shellcheck.enableQuickFix": false,
+  "shellcheck.exclude": [],
+  "shellcheck.executablePath": "shellcheck",
+  "shellcheck.ignoreFileSchemes": ["git", "gitfs"],
+  "shellcheck.ignorePatterns": {
+    "**/.git/objects/**": true,
+    "**/.git/subtree-cache/**": true,
+    "**/node_modules/*/**": true
+  },
+  "shellcheck.run": "onType",
+  "shellcheck.useWSL": false,
+  "shellcheck.useWorkspaceRootAsCwd": true,
+  "yaml.format.enable": true,
+  "yaml.format.singleQuote": true,
+  "yaml.format.bracketSpacing": true,
+  "yaml.format.proseWrap": true,
+  "yaml.format.printWidth": true,
+  "yaml.validate": true,
+  "yaml.hover": true,
+  "yaml.completion": true
+}

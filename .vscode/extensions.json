@@ -1,0 +1,16 @@
+{
+  "recommendations": [
+    "Dart-Code.dart-code",
+    "Dart-Code.flutter",
+    "pkief.material-icon-theme",
+    "johnpapa.vscode-peacock",
+    "sadesyllas.vscode-workspace-switcher",
+    "editorconfig.editorconfig",
+    "shd101wyy.markdown-preview-enhanced",
+    "foxundermoon.shell-format",
+    "timonwong.shellcheck",
+    "tomoyukim.vscode-mermaid-editor",
+    "redhat.vscode-yaml",
+    "esbenp.prettier-vscode"
+  ]
+}

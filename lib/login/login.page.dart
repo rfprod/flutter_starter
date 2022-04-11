@@ -119,6 +119,11 @@ class _AppLoginPageState extends State<AppLoginPage> {
     return Scaffold(
         appBar: AppBar(
           title: Text(widget.title),
+          actions: <Widget>[
+            IconButton(
+                icon: Icon(Icons.info),
+                onPressed: () => Navigator.pushNamed(context, '/about')),
+          ],
         ),
         body: Form(
           key: _formKey,

@@ -223,6 +223,9 @@ class _AppHomePageState extends State<AppHomePage> {
       appBar: AppBar(
         title: Text(widget.title),
         actions: <Widget>[
+          IconButton(
+              icon: Icon(Icons.info),
+              onPressed: () => Navigator.pushNamed(context, '/about')),
           if (_user == null)
             IconButton(
                 icon: Icon(Icons.login),
