@@ -2,18 +2,13 @@
 
 A Flutter starter project.
 
-## Getting Started
+[![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
 
-This project is a starting point for a Flutter application.
+## Workflows
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+| Info                                                   | Trigger            | Badge                                                                                                                                                                                                           |
+| ------------------------------------------------------ | ------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [:information_source:](# "Code ownership validation.") | Scheduled (weekly) | [![codeowners-validator](https://github.com/rfprod/flutter_starter/actions/workflows/codeowners-validator.yml/badge.svg)](https://github.com/rfprod/flutter_starter/actions/workflows/codeowners-validator.yml) |
 
 ## Requirements
 
@@ -21,10 +16,12 @@ In order to run own copy of the project one must fulfill the following requireme
 
 ### Supported operating systems
 
-- [Debian based Linux](https://en.wikipedia.org/wiki/List_of_Linux_distributions#Debian-based)
-  - Recommended IDE - [VSCode](https://code.visualstudio.com/)
-- ~~[OSX](https://en.wikipedia.org/wiki/MacOS)~~ - you'll have to figure our yourself how to set up flutter on OSX
-- ~~[Windows](https://en.wikipedia.org/wiki/Microsoft_Windows)~~ - you'll have to figure our yourself how to set up flutter on Windows
+- :trophy: [Debian based Linux](https://en.wikipedia.org/wiki/List_of_Linux_distributions#Debian-based) - `recommended`
+  - check out [this dev setup instructions](https://github.com/rfprod/wdsdu) to facilitate setting up the dev environment;
+- :ok: [OSX](https://en.wikipedia.org/wiki/MacOS) - `should work due to the similarities with Linux`
+  - one will have to figure out oneself how to set up the dev environment;
+- :no_entry_sign: [Windows](https://en.wikipedia.org/wiki/Microsoft_Windows) - `not recommended`
+  - one will have to figure out oneself how to set up the dev environment.
 
 ### Core dependencies
 
@@ -53,6 +50,19 @@ bash ./install.sh
 ## Working with the project
 
 Use the [Flutter CLI](https://docs.flutter.dev/reference/flutter-cli) to work with the project.
+
+### Getting Started
+
+This project is a starting point for a Flutter application.
+
+A few resources to get you started if this is your first Flutter project:
+
+- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
+- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+
+For help getting started with Flutter, view our
+[online documentation](https://flutter.dev/docs), which offers tutorials,
+samples, guidance on mobile development, and a full API reference.
 
 ### Google services integration
 

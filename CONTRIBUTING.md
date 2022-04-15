@@ -27,7 +27,7 @@ Now that you're a part of the community, you can keep participating in many ways
 - [Reviewing](#reviewing)
   - [Self review](#self-review)
   - [Suggested changes](#suggested-changes)
-- [Working in the repository](#working-in-the-repository)
+- [Working with the repository](#working-with-the-repository)
 
 ## Types of contributions
 
@@ -65,7 +65,7 @@ Fork using the command line:
 
 ### Make your update
 
-Make your changes to the file(s) you'd like to update. Here are some tips and tricks for [using the docs codebase](#working-in-the-repository).
+Make your changes to the file(s) you'd like to update. Here are some tips and tricks for [working with the repository](#working-with-the-repository).
 
 ### Open a pull request
 
@@ -107,6 +107,6 @@ We may ask for changes to be made before a PR can be merged, either using [sugge
 
 As you update your PR and apply changes, mark each conversation as [resolved](https://docs.github.com/en/github/collaborating-with-issues-and-pull-requests/commenting-on-a-pull-request#resolving-conversations).
 
-## Working in the repository
+## Working with the repository
 
 To work with in the repository the following [requirements](https://github.com/rfprod/flutter_starter#requirements) should be fulfilled.
