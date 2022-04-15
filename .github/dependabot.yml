@@ -1,0 +1,10 @@
+# The dependabot configuration reference: https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuring-dependabot-version-updates#enabling-dependabot-version-updates
+# The blog post on the topic: https://github.blog/changelog/2022-04-05-pub-beta-support-for-dependabot-version-updates/
+
+version: 2
+enable-beta-ecosystems: true
+updates:
+  - package-ecosystem: "pub"
+    directory: "/"
+    schedule:
+      interval: "weekly"
