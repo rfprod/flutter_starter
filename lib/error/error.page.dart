@@ -11,7 +11,7 @@ class AppErrorPage extends StatefulWidget {
   final String title;
 
   @override
-  _AppErrorPageState createState() => _AppErrorPageState();
+  State<AppErrorPage> createState() => _AppErrorPageState();
 }
 
 class _AppErrorPageState extends State<AppErrorPage> {

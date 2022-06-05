@@ -4,7 +4,7 @@ class AppLoadingWidget extends StatefulWidget {
   const AppLoadingWidget({required Key key}) : super(key: key);
 
   @override
-  _AppLoadingWidgetState createState() => _AppLoadingWidgetState();
+  State<AppLoadingWidget> createState() => _AppLoadingWidgetState();
 }
 
 class _AppLoadingWidgetState extends State<AppLoadingWidget> {

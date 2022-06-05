@@ -69,7 +69,7 @@ class _AppAboutStackState extends State<AppAboutStack> {
   }
 
   Set<JavascriptChannel> _createJavascriptChannels(BuildContext context) {
-    return {
+    return <JavascriptChannel>{
       JavascriptChannel(
         name: 'SnackBar',
         onMessageReceived: (JavascriptMessage message) {
