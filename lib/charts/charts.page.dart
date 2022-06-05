@@ -71,7 +71,7 @@ class AppChartsPage extends StatefulWidget {
   final String title;
 
   @override
-  _AppChartsPageState createState() => _AppChartsPageState();
+  State<AppChartsPage> createState() => _AppChartsPageState();
 }
 
 class _AppChartsPageState extends State<AppChartsPage> {
@@ -116,7 +116,7 @@ class _AppChartsPageState extends State<AppChartsPage> {
         .timeout(const Duration(seconds: 10))
         .then((http.Response response) => ApiResponse.fromJson(response.body))
         .catchError((Object error) {
-      String errorText = 'Get data failed. ' + error.toString();
+      String errorText = 'Get data failed. $error';
       Exception exception = Exception(errorText);
       _showSnackbar(errorText);
       throw exception;

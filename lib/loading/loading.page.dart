@@ -8,7 +8,7 @@ class AppLoadingPage extends StatefulWidget {
   final String title;
 
   @override
-  _AppLoadingPageState createState() => _AppLoadingPageState();
+  State<AppLoadingPage> createState() => _AppLoadingPageState();
 }
 
 class _AppLoadingPageState extends State<AppLoadingPage> {

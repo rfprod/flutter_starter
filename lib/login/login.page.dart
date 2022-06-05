@@ -9,7 +9,7 @@ class AppLoginPage extends StatefulWidget {
   final String title;
 
   @override
-  _AppLoginPageState createState() => _AppLoginPageState();
+  State<AppLoginPage> createState() => _AppLoginPageState();
 }
 
 class _AppLoginPageState extends State<AppLoginPage> {

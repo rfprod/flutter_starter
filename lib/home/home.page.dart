@@ -51,7 +51,7 @@ class AppHomePage extends StatefulWidget {
   final String title;
 
   @override
-  _AppHomePageState createState() => _AppHomePageState();
+  State<AppHomePage> createState() => _AppHomePageState();
 }
 
 class _AppHomePageState extends State<AppHomePage> {
@@ -89,7 +89,7 @@ class _AppHomePageState extends State<AppHomePage> {
         .timeout(const Duration(seconds: 10))
         .then((http.Response response) => ApiResponse.fromJson(response.body))
         .catchError((Object error) {
-      String errorText = 'Get data failed. ' + error.toString();
+      String errorText = 'Get data failed. $error';
       Exception exception = Exception(errorText);
       _showSnackbar(errorText);
       throw exception;

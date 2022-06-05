@@ -37,9 +37,11 @@ dependencies:
   webview_flutter: ^3.0.4
 
 dev_dependencies:
+  build_runner: ^2.1.11 # required by mockito to generate mocks
   flutter_test:
     sdk: flutter
-  lints: ^1.0.1
+  lints: ^2.0.0
+  mockito: ^5.2.0 # mocking library
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

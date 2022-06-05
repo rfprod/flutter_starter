@@ -1,0 +1,130 @@
+# For more information see: https://github.com/marketplace/actions/flutter-action
+
+name: pr-validation
+
+on:
+  pull_request:
+    branches: [main]
+
+defaults:
+  run:
+    shell: bash
+
+concurrency:
+  group: ${{ github.head_ref }}.${{ github.sha }}.pr-validation
+  cancel-in-progress: true
+
+jobs:
+  premerge:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      - name: Detect changes
+        uses: dorny/paths-filter@v2
+        id: changes
+        with:
+          filters: |
+            workspace:
+              - '.github/workflows/pr-validation.yml'
+              - 'lib/**'
+              - 'test/**'
+              - 'android/**'
+              - 'ios/**'
+              - 'analysis_options.yaml'
+              - '.metadata'
+              - 'pubspec.yaml'
+              - 'pubspec.lock'
+
+      - name: Don't save Bash session history
+        run: unset HISTFILE
+
+      - name: Validate the commit messages
+        run: |
+          sudo pip3 install -U Commitizen
+          git checkout -b premerge
+          git fetch origin main:main
+          cz check --rev-range main..premerge
+
+      - name: Setup Java
+        uses: actions/setup-java@v2
+        with:
+          distribution: "zulu"
+          java-version: "11"
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.0.1"
+          channel: "stable"
+
+      - name: Get variables (flutter version, commit hash)
+        if: ${{ steps.changes.outputs.workspace == 'true' }}
+        id: get-variables
+        run: echo "::set-output name=flutterversion::$(flutter --version | grep -Po "(?<=Flutter\\s)[0-9]+[.][0-9]+[.][0-9]+")"; echo "::set-output name=commitsha::$(echo ${GITHUB_SHA})"
+
+      - name: Workspace cache (npm, yarn, nx, jest)
+        if: ${{ steps.changes.outputs.workspace == 'true' }}
+        uses: actions/cache@v2
+        id: workspace-cache # use this to check for `cache-hit` (`steps.workspace-cache.outputs.cache-hit != 'true'`)
+        env:
+          cache-name: workspace-cache
+        with:
+          path: |
+            ./.dart-tool
+            ./.flutter-plugins
+            ./.flutter-plugins-dependencies
+            ./.packages
+            ./build
+            ./flutter_starter.iml
+          key: ${{ runner.os }}-flutter-${{ steps.get-variables.outputs.flutterversion }}-workspace-${{ steps.get-variables.outputs.commitsha }}
+          restore-keys: |
+            ${{ runner.os }}-flutter-${{ steps.get-variables.outputs.flutterversion }}-workspace-
+            ${{ runner.os }}-flutter-
+            ${{ runner.os }}-
+
+      - name: Install dependencies
+        if: ${{ steps.changes.outputs.workspace == 'true' }}
+        run: flutter pub get
+
+      - name: Create .env
+        if: ${{ steps.changes.outputs.workspace == 'true' }}
+        run: |
+          echo "SENTRY_DSN='$SENTRY_DSN'" > ./.env
+          echo "FIRE_API_KEY='$FIRE_API_KEY'" >> ./.env
+          echo "FIRE_APP_ID='$FIRE_APP_ID'" >> ./.env
+          echo "FIRE_MESSAGING_SENDER_ID='$FIRE_MESSAGING_SENDER_ID'" >> ./.env
+          echo "FIRE_PROJECT_ID='$FIRE_PROJECT_ID'" >> ./.env
+        env:
+          SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
+          FIRE_API_KEY: ${{ secrets.FIRE_API_KEY }}
+          FIRE_APP_ID: ${{ secrets.FIRE_APP_ID }}
+          FIRE_MESSAGING_SENDER_ID: ${{ secrets.FIRE_MESSAGING_SENDER_ID }}
+          FIRE_PROJECT_ID: ${{ secrets.FIRE_PROJECT_ID }}
+
+      - name: Analyze
+        if: ${{ steps.changes.outputs.workspace == 'true' }}
+        run: flutter analyze
+
+      - name: Run tests
+        if: ${{ steps.changes.outputs.workspace == 'true' }}
+        run: flutter test
+
+      - name: Create google-services.json
+        if: ${{ steps.changes.outputs.workspace == 'true' }}
+        run: jq -n "$GOOGLE_SERVICES_JSON" > ./android/app/google-services.json
+        env:
+          GOOGLE_SERVICES_JSON: ${{ secrets.GOOGLE_SERVICES_JSON }}
+
+      - name: Build App Bundle
+        if: ${{ steps.changes.outputs.workspace == 'true' }}
+        run: flutter build appbundle
+
+      - name: Cleanup
+        if: always()
+        run: rm -rf ./.env ./android/app/google-services.json

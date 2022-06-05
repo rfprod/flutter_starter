@@ -7,7 +7,7 @@ class AppErrorWidget extends StatefulWidget {
   final AsyncSnapshot<Object?> snapshot;
 
   @override
-  _AppErrorWidgetState createState() => _AppErrorWidgetState();
+  State<AppErrorWidget> createState() => _AppErrorWidgetState();
 }
 
 class _AppErrorWidgetState extends State<AppErrorWidget> {

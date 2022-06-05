@@ -1,14 +1,16 @@
 # flutter_starter
 
-A Flutter starter project.
+Flutter starter project with workflow automation.
 
 [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
 
 ## Workflows
 
-| Info                                                   | Trigger            | Badge                                                                                                                                                                                                           |
-| ------------------------------------------------------ | ------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [:information_source:](# "Code ownership validation.") | Scheduled (weekly) | [![codeowners-validator](https://github.com/rfprod/flutter_starter/actions/workflows/codeowners-validator.yml/badge.svg)](https://github.com/rfprod/flutter_starter/actions/workflows/codeowners-validator.yml) |
+| Info                                                                         | Trigger                             | Badge                                                                                                                                                                                                           |
+| ---------------------------------------------------------------------------- | ----------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [:information_source:](# "Quality gates.")                                   | PR open event (destination: trunk)  | [![pr-validation](https://github.com/rfprod/flutter_starter/actions/workflows/pr-validation.yml/badge.svg)](https://github.com/rfprod/flutter_starter/actions/workflows/pr-validation.yml)                      |
+| [:information_source:](# "Full testing, deliverables build and deployment.") | PR merge event (destination: trunk) | [![trunk-on-push](https://github.com/rfprod/flutter_starter/actions/workflows/trunk-on-push.yml/badge.svg)](https://github.com/rfprod/flutter_starter/actions/workflows/trunk-on-push.yml)                      |
+| [:information_source:](# "Code ownership validation.")                       | Scheduled (weekly)                  | [![codeowners-validator](https://github.com/rfprod/flutter_starter/actions/workflows/codeowners-validator.yml/badge.svg)](https://github.com/rfprod/flutter_starter/actions/workflows/codeowners-validator.yml) |
 
 ## Requirements
 
@@ -63,6 +65,18 @@ A few resources to get you started if this is your first Flutter project:
 For help getting started with Flutter, view our
 [online documentation](https://flutter.dev/docs), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
+
+### Environment variables
+
+Create an `.env` file in the project root with the following values
+
+```plaintext
+SENTRY_DSN='...'
+FIRE_API_KEY='...'
+FIRE_APP_ID='...'
+FIRE_MESSAGING_SENDER_ID='...'
+FIRE_PROJECT_ID='...'
+```
 
 ### Google services integration
 
