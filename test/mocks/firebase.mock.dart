@@ -12,37 +12,7 @@ typedef Callback = void Function(MethodCall call);
 void setupFirebaseAuthMocks([Callback? customHandlers]) {
   TestWidgetsFlutterBinding.ensureInitialized();
 
-  MethodChannelFirebase.channel
-      .setMockMethodCallHandler((MethodCall call) async {
-    if (call.method == 'Firebase#initializeCore') {
-      return <Map<String, dynamic>>[
-        <String, dynamic>{
-          'name': defaultFirebaseAppName,
-          'options': <String, String>{
-            'apiKey': '123',
-            'appId': '123',
-            'messagingSenderId': '123',
-            'projectId': '123',
-          },
-          'pluginConstants': <String, dynamic>{},
-        }
-      ];
-    }
-
-    if (call.method == 'Firebase#initializeApp') {
-      return <String, dynamic>{
-        'name': call.arguments['appName'],
-        'options': call.arguments['options'],
-        'pluginConstants': <String, dynamic>{},
-      };
-    }
-
-    if (customHandlers != null) {
-      customHandlers(call);
-    }
-
-    return null;
-  });
+  TestFirebaseCoreHostApi.setup(MockFirebaseApp());
 }
 
 Future<T> neverEndingFuture<T>() async {
