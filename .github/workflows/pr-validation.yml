@@ -60,7 +60,7 @@ jobs:
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: "3.0.2"
+          flutter-version: "3.0.5"
           channel: "stable"
 
       - name: Get variables (flutter version, commit hash)
@@ -68,7 +68,7 @@ jobs:
         id: get-variables
         run: echo "::set-output name=flutterversion::$(flutter --version | grep -Po "(?<=Flutter\\s)[0-9]+[.][0-9]+[.][0-9]+")"; echo "::set-output name=commitsha::$(echo ${GITHUB_SHA})"
 
-      - name: Workspace cache (npm, yarn, nx, jest)
+      - name: Workspace cache
         if: ${{ steps.changes.outputs.workspace == 'true' }}
         uses: actions/cache@v3
         id: workspace-cache # use this to check for `cache-hit` (`steps.workspace-cache.outputs.cache-hit != 'true'`)
