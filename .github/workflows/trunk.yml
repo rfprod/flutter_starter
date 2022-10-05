@@ -1,6 +1,6 @@
 # For more information see: https://github.com/marketplace/actions/flutter-action
 
-name: trunk-on-push
+name: trunk
 
 on:
   push:
@@ -11,7 +11,7 @@ defaults:
     shell: bash
 
 concurrency:
-  group: ${{ github.head_ref }}.${{ github.sha }}.trunk-on-push
+  group: ${{ github.head_ref }}.${{ github.sha }}.trunk
   cancel-in-progress: true
 
 jobs:
@@ -28,7 +28,7 @@ jobs:
         with:
           filters: |
             workspace:
-              - '.github/workflows/pr-validation.yml'
+              - '.github/workflows/trunk.yml'
               - 'lib/**'
               - 'test/**'
               - 'android/**'
@@ -50,7 +50,7 @@ jobs:
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: "3.3.2"
+          flutter-version: "3.3.3"
           channel: "stable"
 
       - name: Get variables (flutter version, commit hash)

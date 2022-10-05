@@ -1,4 +1,4 @@
-name: codeowners-validator
+name: validate-codeowners
 
 on:
   schedule:
@@ -9,7 +9,7 @@ defaults:
     shell: bash
 
 concurrency:
-  group: ${{ github.head_ref }}.${{ github.sha }}.codeowners-validator
+  group: ${{ github.head_ref }}.${{ github.sha }}.validate-codeowners
   cancel-in-progress: true
 
 jobs:

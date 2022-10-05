@@ -1,6 +1,6 @@
 # For more information see: https://github.com/marketplace/actions/flutter-action
 
-name: pr-validation
+name: validate-pr
 
 on:
   pull_request:
@@ -11,7 +11,7 @@ defaults:
     shell: bash
 
 concurrency:
-  group: ${{ github.head_ref }}.${{ github.sha }}.pr-validation
+  group: ${{ github.head_ref }}.${{ github.sha }}.validate-pr
   cancel-in-progress: true
 
 jobs:
@@ -31,7 +31,7 @@ jobs:
         with:
           filters: |
             workspace:
-              - '.github/workflows/pr-validation.yml'
+              - '.github/workflows/validate-pr.yml'
               - 'lib/**'
               - 'test/**'
               - 'android/**'
@@ -60,7 +60,7 @@ jobs:
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: "3.3.2"
+          flutter-version: "3.3.3"
           channel: "stable"
 
       - name: Get variables (flutter version, commit hash)
