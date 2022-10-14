@@ -26,18 +26,18 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.0
   firebase_analytics: ^9.3.8
-  firebase_auth: ^3.11.1
+  firebase_auth: ^3.11.2
   firebase_core: ^1.24.0
   flutter:
     sdk: flutter
   flutter_dotenv: ^5.0.2
   http: ^0.13.4
   provider: ^6.0.3 # see docs: https://flutter.dev/docs/development/data-and-backend/state-mgmt/simple
-  sentry: ^6.11.2
+  sentry: ^6.12.0
   webview_flutter: ^3.0.4
 
 dev_dependencies:
-  build_runner: ^2.2.1 # required by mockito to generate mocks
+  build_runner: ^2.3.0 # required by mockito to generate mocks
   flutter_test:
     sdk: flutter
   lints: ^2.0.0
