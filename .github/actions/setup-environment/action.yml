@@ -1,0 +1,74 @@
+# For more information see:
+# - https://docs.github.com/en/actions/creating-actions/creating-a-composite-action
+# - https://docs.github.com/en/actions/creating-actions/metadata-syntax-for-github-actions#outputsoutput_id
+
+# The action can be referenced in workflows like:
+# uses: ./.github/actions/setup-environment
+
+name: setup-environment
+description: Set up the environment. This composite action should be used in two workflows - valudate-pr and trunk.
+
+inputs:
+  src:
+    description: Indicates that the source code has beed changed
+    required: true
+    default: "false"
+
+runs:
+  using: "composite"
+  steps:
+    - name: Don't save Bash session history
+      shell: bash
+      run: unset HISTFILE
+
+    - name: Setup Java
+      if: ${{ inputs.src == 'true' }}
+      uses: actions/setup-java@v2
+      with:
+        distribution: "zulu"
+        java-version: "11"
+
+    - name: Setup Flutter
+      if: ${{ inputs.src == 'true' }}
+      uses: subosito/flutter-action@v2
+      with:
+        flutter-version: "3.3.3"
+        channel: "stable"
+
+    - name: Get variables
+      if: ${{ inputs.src == 'true' }}
+      id: get-variables
+      shell: bash
+      run: |
+        FLUTTER_VERSION=$(flutter --version | grep -Po "(?<=Flutter\\s)[0-9]+[.][0-9]+[.][0-9]+")
+        echo "flutterversion=$(echo ${FLUTTER_VERSION})" >> $GITHUB_OUTPUT
+        echo "commitsha=$(echo ${GITHUB_SHA})" >> $GITHUB_OUTPUT
+        echo "### :rocket: Variables" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "- flutterversion: $FLUTTER_VERSION" >> $GITHUB_STEP_SUMMARY
+        echo "- commitsha: $GITHUB_SHA" >> $GITHUB_STEP_SUMMARY
+
+    - name: Workspace cache
+      if: ${{ inputs.src == 'true' }}
+      uses: actions/cache@v3
+      id: workspace-cache # use this to check for `cache-hit` (`steps.workspace-cache.outputs.cache-hit != 'true'`)
+      env:
+        cache-name: workspace-cache
+      with:
+        path: |
+          ./.dart-tool
+          ./.flutter-plugins
+          ./.flutter-plugins-dependencies
+          ./.packages
+          ./build
+          ./flutter_starter.iml
+        key: ${{ runner.os }}-flutter-${{ steps.get-variables.outputs.flutterversion }}-workspace-${{ steps.get-variables.outputs.commitsha }}
+        restore-keys: |
+          ${{ runner.os }}-flutter-${{ steps.get-variables.outputs.flutterversion }}-workspace-
+          ${{ runner.os }}-flutter-
+          ${{ runner.os }}-
+
+    - name: Install dependencies
+      if: ${{ inputs.src == 'true' }}
+      shell: bash
+      run: flutter pub get

@@ -1,0 +1,19 @@
+# For more information see:
+# - https://docs.github.com/en/actions/creating-actions/creating-a-composite-action
+# - https://docs.github.com/en/actions/creating-actions/metadata-syntax-for-github-actions#outputsoutput_id
+
+# The action can be referenced in workflows like:
+# uses: rfprod/nx-ng-starter/.github/actions/setup-environment@main
+# or
+# uses: ./.github/actions/cleanup-environment
+
+name: cleanup-environment
+description: Cleans up the runner environment.
+
+runs:
+  using: "composite"
+  steps:
+    - name: FS cleanup
+      shell: bash
+      if: always()
+      run: rm -rf ./.env ./android/app/google-services.json
