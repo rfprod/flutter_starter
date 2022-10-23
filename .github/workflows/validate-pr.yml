@@ -15,7 +15,24 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  checks:
+    runs-on: ubuntu-latest
+
+    outputs:
+      origin: ${{ steps.check-origin.outputs.origin }}
+
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Check origin
+        id: check-origin
+        uses: ./.github/actions/check-origin
+
   premerge:
+    needs: checks
     runs-on: ubuntu-latest
 
     steps:
@@ -55,7 +72,7 @@ jobs:
           cz check --rev-range main..premerge
 
       - name: Create .env
-        if: ${{ steps.changes.outputs.src == 'true' }}
+        if: ${{ steps.changes.outputs.src == 'true' && needs.checks.outputs.origin == 'true' }}
         shell: bash
         run: |
           echo "SENTRY_DSN='$SENTRY_DSN'" > ./.env
@@ -79,13 +96,13 @@ jobs:
         run: flutter test
 
       - name: Create google-services.json
-        if: ${{ steps.changes.outputs.src == 'true' }}
+        if: ${{ steps.changes.outputs.src == 'true' && needs.checks.outputs.origin == 'true' }}
         run: jq -n "$GOOGLE_SERVICES_JSON" > ./android/app/google-services.json
         env:
           GOOGLE_SERVICES_JSON: ${{ secrets.GOOGLE_SERVICES_JSON }}
 
-      - name: Build App Bundle
-        if: ${{ steps.changes.outputs.src == 'true' }}
+      - name: Build app bundle
+        if: ${{ steps.changes.outputs.src == 'true' && needs.checks.outputs.origin == 'true' }}
         run: flutter build appbundle
 
       - name: Cleanup
