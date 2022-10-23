@@ -6,7 +6,7 @@ Flutter starter project with workflow automation.
 
 ## Workflows
 
-| Info                                                                         | Trigger                             | Badge                                                                                                                                                                                                        |
+|                                                                              | Trigger                             | Badge                                                                                                                                                                                                        |
 | ---------------------------------------------------------------------------- | ----------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | [:information_source:](# "Full testing, deliverables build and deployment.") | PR merge event (destination: trunk) | [![trunk](https://github.com/rfprod/flutter_starter/actions/workflows/trunk.yml/badge.svg)](https://github.com/rfprod/flutter_starter/actions/workflows/trunk.yml)                                           |
 | [:information_source:](# "Code ownership validation.")                       | Scheduled (weekly)                  | [![validate-codeowners](https://github.com/rfprod/flutter_starter/actions/workflows/validate-codeowners.yml/badge.svg)](https://github.com/rfprod/flutter_starter/actions/workflows/validate-codeowners.yml) |
