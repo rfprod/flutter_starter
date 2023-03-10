@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_starter/about/about.menu.dart';
 import 'package:flutter_starter/about/about.stack.dart';
@@ -18,19 +17,6 @@ class AppAboutPage extends StatefulWidget {
 class _AppAboutPageState extends State<AppAboutPage> {
   final Completer<WebViewController> controller =
       Completer<WebViewController>();
-
-  @override
-  void initState() {
-    if (Platform.isAndroid) {
-      WebView.platform = SurfaceAndroidWebView();
-    }
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
