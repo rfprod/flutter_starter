@@ -1,5 +1,7 @@
 import 'dart:async';
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:webview_cookie_manager/webview_cookie_manager.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 enum _MenuOptions {
@@ -24,7 +26,7 @@ class AppAboutMenu extends StatefulWidget {
 }
 
 class _AppAboutMenuState extends State<AppAboutMenu> {
-  final CookieManager cookieManager = CookieManager();
+  final WebviewCookieManager cookieManager = WebviewCookieManager();
 
   @override
   Widget build(BuildContext context) {
@@ -36,17 +38,18 @@ class _AppAboutMenuState extends State<AppAboutMenu> {
           onSelected: (_MenuOptions value) async {
             switch (value) {
               case _MenuOptions.navigationDelegate:
-                controller.data!.loadUrl('https://g.dev/rfprod');
+                Uri uri = Uri.parse('https://g.dev/rfprod');
+                controller.data!.loadRequest(uri);
                 break;
               case _MenuOptions.userAgent:
-                final String userAgent = await controller.data!
-                    .runJavascriptReturningResult('navigator.userAgent');
+                final Object userAgent = await controller.data!
+                    .runJavaScriptReturningResult('navigator.userAgent');
                 ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                  content: Text(userAgent),
+                  content: Text(userAgent.toString()),
                 ));
                 break;
               case _MenuOptions.javascriptChannel:
-                await controller.data!.runJavascript('''
+                await controller.data!.runJavaScript('''
 var req = new XMLHttpRequest();
 req.open('GET', "https://api.ipify.org/?format=json");
 req.onload = function() {
@@ -117,21 +120,25 @@ req.send();''');
 
   // list cookies
   Future<void> _onListCookies(WebViewController controller) async {
-    final String cookies =
-        await controller.runJavascriptReturningResult('document.cookie');
+    final Object cookies =
+        await controller.runJavaScriptReturningResult('document.cookie');
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text(cookies.isNotEmpty ? cookies : 'There are no cookies.'),
+        content: Text(cookies.toString().isNotEmpty
+            ? cookies.toString()
+            : 'There are no cookies.'),
       ),
     );
   }
 
   // clear cookies
   Future<void> _onClearCookies() async {
-    final bool hadCookies = await cookieManager.clearCookies();
+    final bool hadCookies = await cookieManager.hasCookies();
     String message = 'There were cookies. Now, they are gone!';
     if (!hadCookies) {
       message = 'There were no cookies to clear.';
+    } else {
+      await cookieManager.clearCookies();
     }
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
@@ -142,7 +149,7 @@ req.send();''');
 
   // add a cookie
   Future<void> _onAddCookie(WebViewController controller) async {
-    await controller.runJavascript('''var date = new Date();
+    await controller.runJavaScript('''var date = new Date();
   date.setTime(date.getTime()+(30*24*60*60*1000));
   document.cookie = "FirstName=John; expires=" + date.toGMTString();''');
     ScaffoldMessenger.of(context).showSnackBar(
@@ -154,9 +161,12 @@ req.send();''');
 
   // set a cookie
   Future<void> _onSetCookie(WebViewController controller) async {
-    await cookieManager.setCookie(
-      const WebViewCookie(name: 'foo', value: 'bar', domain: 'flutter.dev'),
-    );
+    await cookieManager.setCookies(<Cookie>[
+      Cookie('foo', 'bar')
+        ..domain = 'flutter.dev'
+        ..expires = DateTime.now().add(Duration(days: 10))
+        ..httpOnly = false,
+    ]);
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
         content: Text('Custom cookie is set.'),
@@ -166,7 +176,7 @@ req.send();''');
 
   // remove a cookie
   Future<void> _onRemoveCookie(WebViewController controller) async {
-    await controller.runJavascript(
+    await controller.runJavaScript(
         'document.cookie="FirstName=John; expires=Thu, 01 Jan 1970 00:00:00 UTC" ');
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(

@@ -118,7 +118,7 @@ Example output
 $ flutter emulators
 1 available emulator:
 
-api31device • api31device •  • android
+api33device • api33device •  • android
 
 To run an emulator, run 'flutter emulators --launch <emulator id>'.
 To create a new emulator, run 'flutter emulators --create [--name xyz]'.
@@ -133,7 +133,7 @@ You can find more information on managing emulators at the links below:
 Given you have devices and emulators as listed above (see point 2, point 2), to launch an emulator execute
 
 ```bash
-flutter emulators --launch api31device
+flutter emulators --launch api33device
 ```
 
 5. **run the application on the emulator**
