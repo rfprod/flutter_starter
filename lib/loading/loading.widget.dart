@@ -19,7 +19,7 @@ class _AppLoadingWidgetState extends State<AppLoadingWidget> {
           ),
           Text(
             'Please wait',
-            style: Theme.of(context).textTheme.headline4,
+            style: Theme.of(context).textTheme.headlineMedium,
           ),
         ],
       ),

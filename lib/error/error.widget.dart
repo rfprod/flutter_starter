@@ -25,7 +25,7 @@ class _AppErrorWidgetState extends State<AppErrorWidget> {
           ),
           Text(
             'Please try again a bit later.',
-            style: Theme.of(context).textTheme.headline5,
+            style: Theme.of(context).textTheme.headlineSmall,
           ),
         ],
       ),

@@ -200,7 +200,7 @@ class _AppChartsPageState extends State<AppChartsPage> {
             ),
             Text(
               'Transactions per second',
-              style: Theme.of(context).textTheme.headline5,
+              style: Theme.of(context).textTheme.headlineSmall,
             ),
             FutureBuilder<ApiResponse>(
               future: _getDataFuture(),

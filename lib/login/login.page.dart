@@ -56,12 +56,11 @@ class _AppLoginPageState extends State<AppLoginPage> {
     );
   }
 
-  Future<UserCredential> _signIn(BuildContext context) async {
+  Future<void> _signIn(BuildContext context) async {
     return await FirebaseAuth.instance
         .signInWithEmailAndPassword(email: _email, password: _password)
         .then((UserCredential value) {
       Navigator.pop(context);
-      return value;
     }).catchError((Object error) {
       if (error is FirebaseAuthException) {
         switch (error.code) {
@@ -82,12 +81,11 @@ class _AppLoginPageState extends State<AppLoginPage> {
     });
   }
 
-  Future<UserCredential> _signUp(BuildContext context) async {
+  Future<void> _signUp(BuildContext context) async {
     return await FirebaseAuth.instance
         .createUserWithEmailAndPassword(email: _email, password: _password)
         .then((UserCredential value) {
       Navigator.pop(context);
-      return value;
     }).catchError((Object error) {
       if (error is FirebaseAuthException) {
         switch (error.code) {
