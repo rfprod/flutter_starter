@@ -249,7 +249,7 @@ class _AppHomePageState extends State<AppHomePage> {
             ),
             Text(
               'Exchange rates',
-              style: Theme.of(context).textTheme.headline5,
+              style: Theme.of(context).textTheme.headlineSmall,
             ),
             FutureBuilder<ApiResponse>(
               future: _getDataFuture(),
