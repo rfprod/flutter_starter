@@ -33,7 +33,7 @@ dependencies:
   flutter_dotenv: ^5.0.2
   http: ^0.13.4
   provider: ^6.0.3 # see docs: https://flutter.dev/docs/development/data-and-backend/state-mgmt/simple
-  sentry: ^6.22.0
+  sentry: ^7.4.1
   webview_cookie_manager: ^2.0.6
   webview_flutter: ^4.0.7
 
