@@ -22,8 +22,6 @@ In order to run own copy of the project one must fulfill the following requireme
   - check out [this dev setup instructions](https://github.com/rfprod/wdsdu) to facilitate setting up the dev environment;
 - :ok: [OSX](https://en.wikipedia.org/wiki/MacOS) - `should work due to the similarities with Linux`
   - one will have to figure out oneself how to set up the dev environment;
-- :no_entry_sign: [Windows](https://en.wikipedia.org/wiki/Microsoft_Windows) - `not recommended`
-  - one will have to figure out oneself how to set up the dev environment.
 
 ### Core dependencies
 
@@ -80,7 +78,7 @@ FIRE_PROJECT_ID='...'
 
 ### Google services integration
 
-Put the `google-services.json` file into the `./android/app` directory.
+Create the `google-services.json` file in the `./android/app` directory.
 
 ### Quick references
 
@@ -90,23 +88,7 @@ Put the `google-services.json` file into the `./android/app` directory.
 flutter --help
 ```
 
-2. **list the devices**
-
-```bash
-flutter devices list
-```
-
-Example output
-
-```bash
-$ flutter devices list
-2 connected devices:
-
-Android SDK built for x86 (mobile) • emulator-5554 • android-x86    • Android 11 (API 30) (emulator)
-Chrome (web)                       • chrome        • web-javascript • Google Chrome 100.0.4896.75
-```
-
-3. **list the emulators**
+2. **list available emulators**
 
 ```bash
 flutter emulators
@@ -128,12 +110,28 @@ You can find more information on managing emulators at the links below:
   https://developer.android.com/studio/command-line/avdmanager
 ```
 
-4. **launch an emulator**
+3. **launch an emulator**
 
-Given you have devices and emulators as listed above (see point 2, point 2), to launch an emulator execute
+Replace `api33device` with the name of the emulator you configured locally
 
 ```bash
 flutter emulators --launch api33device
+```
+
+4. **list connected devices**
+
+```bash
+flutter devices list
+```
+
+Example output
+
+```bash
+$ flutter devices list
+3 connected devices:
+
+sdk gphone64 x86 64 (mobile) • emulator-5554 • android-x64    • Android 13 (API 33) (emulator)
+...
 ```
 
 5. **run the application on the emulator**
