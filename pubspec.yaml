@@ -35,7 +35,7 @@ dependencies:
   provider: ^6.0.5 # see docs: https://flutter.dev/docs/development/data-and-backend/state-mgmt/simple
   sentry: ^7.6.2
   webview_cookie_manager: ^2.0.6
-  webview_flutter: ^4.2.1
+  webview_flutter: ^4.2.2
 
 dev_dependencies:
   build_runner: ^2.3.3 # required by mockito to generate mocks
