@@ -6,7 +6,6 @@ linter:
     - avoid_empty_else
     - avoid_print
     - avoid_relative_lib_imports
-    - avoid_returning_null_for_future
     - avoid_slow_async_io
     - avoid_types_as_parameter_names
     - avoid_web_libraries_in_flutter
@@ -32,7 +31,6 @@ linter:
     - unsafe_html
     - use_key_in_widget_constructors
     - valid_regexps
-    - always_require_non_null_named_parameters
     - always_specify_types
     - annotate_overrides
     - avoid_bool_literals_in_conditional_expressions
@@ -101,8 +99,8 @@ linter:
     - void_checks
 analyzer:
   strong-mode:
-    implicit-casts: false
-    implicit-dynamic: false
+    # strict-casts: false
+    # strict-raw-types: false
   errors:
     dead_code: error
     camel_case_types: error
