@@ -109,7 +109,8 @@ class _AppHomePageState extends State<AppHomePage> {
         child: SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           child: DataTable(
-            dataRowHeight: 50,
+            dataRowMinHeight: 50,
+            dataRowMaxHeight: 50,
             dividerThickness: 2,
             columns: <DataColumn>[
               DataColumn(
