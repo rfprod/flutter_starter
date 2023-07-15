@@ -16,6 +16,8 @@ class AppAboutStack extends StatefulWidget {
 class _AppAboutStackState extends State<AppAboutStack> {
   Uri uri = Uri.parse('https://rfprod.github.io/flutter_starter/');
 
+  Uri? loadedUri;
+
   int loadingPercentage = 0;
 
   @override
@@ -29,23 +31,33 @@ class _AppAboutStackState extends State<AppAboutStack> {
       })
       ..setBackgroundColor(const Color(0x00000000))
       ..setNavigationDelegate(
+        // TODO: debug navigation delegate
+        // The view falls into infinite cycle of reloads if onProgress is enabled
+        // and the loadedUri variable is not used to determine whether the view has been loaded.
         NavigationDelegate(
-          onProgress: (int progress) {
-            setState(() {
-              loadingPercentage = progress;
-            });
-          },
+          // onProgress: (int progress) {
+          //   if (loadedUri == null) {
+          //     setState(() {
+          //       loadingPercentage = progress;
+          //     });
+          //   }
+          // },
           onPageStarted: (String url) {
-            setState(() {
-              loadingPercentage = 0;
-            });
+            if (loadedUri == null) {
+              setState(() {
+                loadingPercentage = 0;
+              });
+            }
           },
           onPageFinished: (String url) {
-            setState(() {
-              loadingPercentage = 100;
-            });
-            ScaffoldMessenger.of(context)
-                .showSnackBar(SnackBar(content: Text("Loaded $url")));
+            if (loadingPercentage < 100) {
+              setState(() {
+                loadingPercentage = 100;
+                loadedUri = Uri.parse(url);
+              });
+              ScaffoldMessenger.of(context)
+                  .showSnackBar(SnackBar(content: Text("Loaded $url")));
+            }
           },
           onWebResourceError: (WebResourceError error) {
             if (error.isForMainFrame ?? false == true) {
@@ -55,6 +67,7 @@ class _AppAboutStackState extends State<AppAboutStack> {
           },
           onNavigationRequest: (NavigationRequest request) {
             final String host = Uri.parse(request.url).host;
+            loadedUri = null;
             if (host.contains('github.com') ||
                 host.contains('wikipedia.org') ||
                 (host.contains('google.com') &&
@@ -79,7 +92,7 @@ class _AppAboutStackState extends State<AppAboutStack> {
         WebViewWidget(controller: controller),
         if (loadingPercentage < 100)
           LinearProgressIndicator(
-            value: loadingPercentage / 100.0,
+            value: loadingPercentage / 100,
           ),
       ],
     );
