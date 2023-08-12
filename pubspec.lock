@@ -245,26 +245,26 @@ packages:
     dependency: "direct main"
     description:
       name: firebase_auth
-      sha256: "87216661b409575ecb1a7849da38604a0abfcb6497146b66d4832cb97a4c9e0f"
+      sha256: "49fd35ce06f2530dd460e5dc123235731cb61dd7c76b0af4b6e190404880d04d"
       url: "https://pub.dev"
     source: hosted
-    version: "4.7.0"
+    version: "4.7.2"
   firebase_auth_platform_interface:
     dependency: transitive
     description:
       name: firebase_auth_platform_interface
-      sha256: "4ab0a8997994db2b76bf0652689d7908ca935a99314857c683251bc23d31c287"
+      sha256: "817f3ceb84ef5e9adaaf50cf7a19255f6ffcdd12c6f9e9aa4cf00fc7f2eb3cfb"
       url: "https://pub.dev"
     source: hosted
-    version: "6.16.0"
+    version: "6.16.1"
   firebase_auth_web:
     dependency: transitive
     description:
       name: firebase_auth_web
-      sha256: c74c5753855896b31536b9e151e34bf7eea143f0d9c209947b5f7ddc8e111989
+      sha256: e9044778287f1ff8f9f4cee7e247b03ec87bb8977e0e65ad27dc337e196132e8
       url: "https://pub.dev"
     source: hosted
-    version: "5.6.0"
+    version: "5.6.2"
   firebase_core:
     dependency: "direct main"
     description:
@@ -484,10 +484,10 @@ packages:
     dependency: transitive
     description:
       name: plugin_platform_interface
-      sha256: "6a2128648c854906c53fa8e33986fc0247a1116122f9534dd20e3ab9e16a32bc"
+      sha256: "43798d895c929056255600343db8f049921cbec94d31ec87f1dc5c16c01935dd"
       url: "https://pub.dev"
     source: hosted
-    version: "2.1.4"
+    version: "2.1.5"
   pool:
     dependency: transitive
     description:
@@ -524,10 +524,10 @@ packages:
     dependency: "direct main"
     description:
       name: sentry
-      sha256: "8f4f1d3ef3ca1801aa3138392bbf0851b39eff703008111765b265f76c8f0190"
+      sha256: "39c23342fc96105da449914f7774139a17a0ca8a4e70d9ad5200171f7e47d6ba"
       url: "https://pub.dev"
     source: hosted
-    version: "7.8.0"
+    version: "7.9.0"
   shelf:
     dependency: transitive
     description:
@@ -681,10 +681,10 @@ packages:
     dependency: transitive
     description:
       name: webview_flutter_android
-      sha256: "27ad6a99c4b2d5e1ffd2b993a10f738b6b4979f139b4d64c34ac511595fcd748"
+      sha256: bca797abba472868655b5f1a6029c1132385685ee9db4713cb0e7f33076210c6
       url: "https://pub.dev"
     source: hosted
-    version: "3.9.0"
+    version: "3.9.3"
   webview_flutter_platform_interface:
     dependency: transitive
     description:
@@ -697,10 +697,10 @@ packages:
     dependency: transitive
     description:
       name: webview_flutter_wkwebview
-      sha256: "369fdf6160944a7db660ff15fa048c2bd681b09557907beaef1f95e8557d21dc"
+      sha256: ed749f94ac9e814d04a258a9255cf69cfa4cc6006ff59542aea7fb4590144972
       url: "https://pub.dev"
     source: hosted
-    version: "3.7.0"
+    version: "3.7.3"
   yaml:
     dependency: transitive
     description:
