@@ -100,7 +100,7 @@ Example output
 $ flutter emulators
 1 available emulator:
 
-api33device • api33device •  • android
+api34device • api34device •  • android
 
 To run an emulator, run 'flutter emulators --launch <emulator id>'.
 To create a new emulator, run 'flutter emulators --create [--name xyz]'.
@@ -112,10 +112,10 @@ You can find more information on managing emulators at the links below:
 
 3. **launch an emulator**
 
-Replace `api33device` with the name of the emulator you configured locally
+Replace `api34device` with the name of the emulator you configured locally
 
 ```bash
-flutter emulators --launch api33device
+flutter emulators --launch api34device
 ```
 
 4. **list connected devices**
@@ -128,9 +128,8 @@ Example output
 
 ```bash
 $ flutter devices list
-3 connected devices:
-
-sdk gphone64 x86 64 (mobile) • emulator-5554 • android-x64    • Android 13 (API 33) (emulator)
+Found 3 connected devices:
+  sdk gphone64 x86 64 (mobile) • emulator-5554 • android-x64    • Android 14 (API 34) (emulator)
 ...
 ```
 
