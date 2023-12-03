@@ -16,8 +16,7 @@ linter:
     - cancel_subscriptions
     - empty_statements
     - hash_and_equals
-    - iterable_contains_unrelated_type
-    - list_remove_unrelated_type
+    - collection_methods_unrelated_type
     - literal_only_boolean_expressions
     - no_adjacent_strings_in_list
     - no_duplicate_case_values
@@ -98,7 +97,7 @@ linter:
     - use_raw_strings
     - void_checks
 analyzer:
-  strong-mode:
+  # strong-mode:
     # strict-casts: false
     # strict-raw-types: false
   errors:
