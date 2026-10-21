@@ -1,10 +1,43 @@
-# The dependabot configuration reference: https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuring-dependabot-version-updates#enabling-dependabot-version-updates
-# The blog post on the topic: https://github.blog/changelog/2022-04-05-pub-beta-support-for-dependabot-version-updates/
-
 version: 2
-enable-beta-ecosystems: true
 updates:
-  - package-ecosystem: "pub"
-    directory: "/"
+  - package-ecosystem: 'github-actions'
+    directory: '/'
     schedule:
-      interval: "weekly"
+      interval: 'monthly'
+      day: 'monday'
+      time: '04:00'
+    cooldown:
+      default-days: 7
+    groups:
+      all-actions:
+        patterns:
+          - '*'
+    commit-message:
+      prefix: 'ci'
+      include: 'scope'
+    open-pull-requests-limit: 1
+    labels:
+      - 'CI/CD'
+      - 'Dependencies'
+      - 'Maintenance'
+  - package-ecosystem: 'pub'
+    directory: '/'
+    schedule:
+      interval: 'monthly'
+      day: 'monday'
+      time: '04:00'
+    cooldown:
+      default-days: 7
+    groups:
+      all-containers:
+        patterns:
+          - '*'
+    ignore:
+      - dependency-name: '*'
+    commit-message:
+      prefix: 'build'
+      include: 'scope'
+    open-pull-requests-limit: 0
+    labels:
+      - 'Dependencies'
+      - 'Maintenance'

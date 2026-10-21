@@ -12,10 +12,10 @@ inputs:
   src:
     description: Indicates that the source code has beed changed
     required: true
-    default: "false"
+    default: 'false'
 
 runs:
-  using: "composite"
+  using: 'composite'
   steps:
     - name: Don't save Bash session history
       shell: bash
@@ -23,17 +23,17 @@ runs:
 
     - name: Setup Java
       if: ${{ inputs.src == 'true' }}
-      uses: actions/setup-java@v2
+      uses: actions/setup-java@v6
       with:
-        distribution: "zulu"
-        java-version: "11"
+        distribution: 'zulu'
+        java-version: '11'
 
     - name: Setup Flutter
       if: ${{ inputs.src == 'true' }}
       uses: subosito/flutter-action@v2
       with:
-        flutter-version: "3.16.2"
-        channel: "stable"
+        flutter-version: '3.16.2'
+        channel: 'stable'
 
     - name: Get variables
       if: ${{ inputs.src == 'true' }}
@@ -50,7 +50,7 @@ runs:
 
     - name: Workspace cache
       if: ${{ inputs.src == 'true' }}
-      uses: actions/cache@v3
+      uses: actions/cache@v6
       id: workspace-cache # use this to check for `cache-hit` (`steps.workspace-cache.outputs.cache-hit != 'true'`)
       env:
         cache-name: workspace-cache
