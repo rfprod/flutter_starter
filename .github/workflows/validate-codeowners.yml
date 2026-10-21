@@ -18,13 +18,13 @@ jobs:
 
     steps:
       - name: Checkout sources
-        uses: actions/checkout@v3
+        uses: actions/checkout@v7
 
       - name: Don't save Bash session history
         run: unset HISTFILE
 
       - name: GitHub CODEOWNERS Validator
-        uses: mszostok/codeowners-validator@v0.5.1
+        uses: mszostok/codeowners-validator@v0.7.4
         with:
           checks: "files,duppatterns"
           experimental_checks: "notowned"
