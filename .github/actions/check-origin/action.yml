@@ -3,6 +3,8 @@
 # - https://docs.github.com/en/actions/creating-actions/metadata-syntax-for-github-actions#outputsoutput_id
 
 # The action can be referenced in workflows like:
+# uses: rfprod/nx-ng-starter/.github/actions/check-origin@main
+# or
 # uses: ./.github/actions/check-origin
 
 # Explanation:
@@ -22,14 +24,18 @@ inputs:
   original-owner:
     description: Original repository owner
     required: true
-    default: "rfprod"
+    default: 'rfprod'
+  bail-out:
+    description: Exit with an error code 1 if origin verification fails.
+    required: false
+    default: 'true'
 outputs:
   origin:
     description: Indicates that the repository owner is the original owner which means that it is not a fork. Has two values - 'true' if the repo owner is the original owner, 'false' if the repo owner is not the original owner, i.e. it is a fork.
     value: ${{ steps.check-origin.outputs.origin }}
 
 runs:
-  using: "composite"
+  using: 'composite'
   steps:
     - name: Check origin
       id: check-origin
@@ -41,9 +47,14 @@ runs:
         echo "origin=$(echo ${ORIGIN})" >> $GITHUB_OUTPUT
         echo "### :rocket: Check origin" >> $GITHUB_STEP_SUMMARY
         echo "" >> $GITHUB_STEP_SUMMARY
-        echo "- REPO_OWNER: $REPO_OWNER" >> $GITHUB_STEP_SUMMARY
-        echo "- ORIGINAL_OWNER: $ORIGINAL_OWNER" >> $GITHUB_STEP_SUMMARY
-        echo "- ORIGIN: $ORIGIN" >> $GITHUB_STEP_SUMMARY
+        echo "| Metric         | Value           | " >> $GITHUB_STEP_SUMMARY
+        echo "| -------------- | --------------- | " >> $GITHUB_STEP_SUMMARY
+        echo "| REPO_OWNER     | $REPO_OWNER     |" >> $GITHUB_STEP_SUMMARY
+        echo "| ORIGINAL_OWNER | $ORIGINAL_OWNER |" >> $GITHUB_STEP_SUMMARY
+        echo "| BAIL_OUT       | $BAIL_OUT       |" >> $GITHUB_STEP_SUMMARY
+        echo "| ORIGIN         | $ORIGIN         |" >> $GITHUB_STEP_SUMMARY
+        if [[ "$ORIGIN" == "true" && "$BAIL_OUT" == "true" ]]; then exit 1; fi
       env:
         REPO_OWNER: ${{ inputs.repo-owner }}
         ORIGINAL_OWNER: ${{ inputs.original-owner }}
+        BAIL_OUT: ${{ inputs.bail.out }}
